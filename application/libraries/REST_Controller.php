@@ -18,6 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  * @version         3.0.0
  */
+require APPPATH . 'libraries/REST_Controller_Definitions.php';
 trait REST_Controller {
 
     /**
