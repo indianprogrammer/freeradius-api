@@ -21,11 +21,44 @@ require APPPATH . 'libraries/Format.php';
  */
 class User extends CI_Controller {
     use REST_Controller { REST_Controller::__construct as private __resTraitConstruct; }
+    private $RESPONSE = 'ALREADYEXIST';
 
     function __construct(){
         // Construct the parent class
         parent::__construct();
         $this->__resTraitConstruct();
+        $this->load->model('User_model');
+    }
+
+    function add_post(){
+        $postData = $this->input->post();
+        $profile  = $this->input->post('profile');
+
+        $userData['username'] = $postData['username'];
+        $userData['password'] = isset($postData['password'])?$postData['password']:$postData['username'];
+        $userData['profile']  = isset($postData['profile'])?$postData['profile']:'EXPIRED';
+        $profileData = $this->User_model->getProfileDuration($profile);
+        $userData['expirydate']  = isset($postData['expirydate'])?urldecode($postData['expirydate']) :date('Y:m:d H:i:s',strtotime($profileData['value'].' '.$profileData['unit'],time()));
+
+        $flagUserCreation = $this->User_model->insert($userData);
+        if($flagUserCreation){
+            $this->RESPONSE = 'CREATED';
+        }else{
+            $flagProfileUpdate = $this->User_model->profileUpdate($userData);
+        }
+        $this->response(array($userData,'RES'=>$this->RESPONSE), 200);
+    }
+
+    public function profileUpdate_get($username,$profile){
+        #get profile duration
+        $profileData = $this->User_model->getProfileDuration($profile);
+        $expiryTime  = strtotime($profileData['value'].' '.$profileData['unit'],time());
+
+        var_dump($expiryTime); 
+                $this->output->enable_profiler(TRUE);
+
+        return $this->User_model->profileUpdate($username,$profile);
+
     }
 
     function index_get(){
