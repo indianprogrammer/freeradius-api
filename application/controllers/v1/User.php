@@ -36,6 +36,7 @@ class User extends CI_Controller {
 
         $userData['username'] = $postData['username'];
         $userData['password'] = isset($postData['password'])?$postData['password']:$postData['username'];
+        $userData['status'] = isset($postData['status'])?$postData['status']:'ENABLE';
         $userData['profile']  = isset($postData['profile'])?$postData['profile']:'EXPIRED';
         $userData['currentprofile']  = $userData['profile'];
         $profileData = $this->User_model->getProfileDuration($profile);
