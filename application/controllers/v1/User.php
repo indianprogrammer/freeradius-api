@@ -49,20 +49,8 @@ class User extends CI_Controller {
         $this->response(array($userData,'RES'=>$this->RESPONSE), 200);
     }
 
-    public function profileUpdate_get($username,$profile){
-        #get profile duration
-        $profileData = $this->User_model->getProfileDuration($profile);
-        $expiryTime  = strtotime($profileData['value'].' '.$profileData['unit'],time());
-
-        var_dump($expiryTime); 
-                $this->output->enable_profiler(TRUE);
-
-        return $this->User_model->profileUpdate($username,$profile);
-
-    }
-
     function index_get(){
-        echo "test";
+        echo "V1";
     }
 
 }
