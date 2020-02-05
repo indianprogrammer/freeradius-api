@@ -21,6 +21,12 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('profiles',array('attribute'=>'DURATION','profile'=>$profile));
         return $query->row_array();
     }
+
+    public function getDetails($username){
+        $this->db->select('id,username,password,profile,currentprofile,expirydate,ipaddress,macaddress,macbind,status,created,updated');
+        $query = $this->db->get_where('users',array('username'=>$username));
+        return $query->row_array();
+    }
 }
 
 ?>

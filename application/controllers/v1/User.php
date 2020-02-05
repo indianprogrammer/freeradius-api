@@ -51,6 +51,14 @@ class User extends CI_Controller {
         $this->response(array($userData,'RES'=>$this->RESPONSE), 200);
     }
 
+    function getdetails_get(){
+        $this->RESPONSE = 'SUCCESS';
+        $getData = $this->input->get();
+        $username = $getData['username'];
+        $userDetails = $this->User_model->getDetails($username);
+        $this->response(array('userdetails'=>$userDetails,'RES'=>$this->RESPONSE), 200);
+    }
+
     function index_get(){
         echo "V1";
     }
