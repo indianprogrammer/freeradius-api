@@ -56,7 +56,7 @@ class User extends CI_Controller {
         $getData = $this->input->get();
         if(isset($getData['username'])){
             $userDetails = $this->User_model->getDetails($getData['username']);
-            $this->response(array('userdetails'=>$userDetails,'RES'=>$this->RESPONSE), 200);
+            $this->response(array('payload'=>$userDetails,'RES'=>$this->RESPONSE), 200);
         }
         $this->RESPONSE = 'ERROR';
         $this->response(array('RES'=>$this->RESPONSE), 400);
